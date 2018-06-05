@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+<body>
+    <script>
+        var app = angular.module("todoList", []);
+        app.controller("myCtrl", function($scope) {
+            $scope.records = [{
+                    "task": "grocery shopping",
+                    "status": "done"
+                },
+                {
+                    "task": "dance class",
+                    "status": "yet to"
+                },
+                {
+                    "task": "study",
+                    "status": "done"
+                }
+            ];
+            $scope.addItem = function() {
+                $scope.records.push({
+                    task: $scope.addTask,
+                    status: "yet to"
+                });
+            }
+
+            $scope.chgStatus = function(val) {
+                if ($scope.records[val].status == "done") {
+                    $scope.records[val].status = "yet to";
+                } else {
+                    $scope.records[val].status = "done";
+                }
+
+            }
+
+            $scope.delete = function(x) {
+                $scope.records.splice(x, 1);
+            }
+        });
+    </script>
+    <div ng-app="todoList" ng-controller="myCtrl">
+      <center>
+<h1> ToDo App</h1>
+        <table>
+            <tr>
+                <th>Task</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            <tr ng-repeat="x in records">
+                <td>{{x.task}}</td>
+                <td><button ng-click="chgStatus($index)">{{x.status}}</button></td>
+                <td><button ng-click="delete($index)">delete</button></td>
+            </tr>
+        </table>
+        <input ng-model="addTask" placeholder="Add Task">
+
+        <button ng-click="addItem()">Add</button>
+    </div>
+    </center>
+</body>
+</html>
